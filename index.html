@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avyaan's Birthday Party</title>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f0f0f0; }
+        #root { max-width: 300px; margin: 0 auto; padding: 20px; background-color: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        input, button { width: 100%; padding: 10px; margin-bottom: 10px; box-sizing: border-box; }
+        button { background-color: #007bff; color: white; border: none; cursor: pointer; }
+        .boarding-pass { border: 1px solid #ccc; padding: 10px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        function BoardingPass() {
+            const [name, setName] = React.useState('');
+            const [boardingPass, setBoardingPass] = React.useState(null);
+
+            const generateBoardingPass = () => {
+                setBoardingPass({
+                    name: name,
+                    flight: 'AV001',
+                    destination: 'Avyaan\'s 1st Birthday',
+                    gate: Math.floor(Math.random() * 10) + 1
+                });
+            };
+
+            return (
+                <div>
+                    <h1>Avyaan's Travel Adventure</h1>
+                    <input 
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Enter your name"
+                    />
+                    <button onClick={generateBoardingPass}>
+                        Generate Boarding Pass
+                    </button>
+                    
+                    {boardingPass && (
+                        <div className="boarding-pass">
+                            <h2>Boarding Pass</h2>
+                            <p>Passenger: {boardingPass.name}</p>
+                            <p>Flight: {boardingPass.flight}</p>
+                            <p>Destination: {boardingPass.destination}</p>
+                            <p>Gate: {boardingPass.gate}</p>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        ReactDOM.render(<BoardingPass />, document.getElementById('root'));
+    </script>
+</body>
+</html>
