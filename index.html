@@ -2,62 +2,170 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avyaan's Birthday Party</title>
-    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Avyaan's Adventure Boarding Pass</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f0f0f0; }
-        #root { max-width: 300px; margin: 0 auto; padding: 20px; background-color: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        input, button { width: 100%; padding: 10px; margin-bottom: 10px; box-sizing: border-box; }
-        button { background-color: #007bff; color: white; border: none; cursor: pointer; }
-        .boarding-pass { border: 1px solid #ccc; padding: 10px; margin-top: 20px; }
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+        .container {
+            width: 100%;
+            max-width: 350px;
+            height: 100vh;
+            max-height: 700px;
+            background-color: #1a237e;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        .initial-screen, .boarding-pass {
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .initial-screen {
+            background-color: #ffd600;
+            color: #1a237e;
+        }
+        .boarding-pass {
+            background-color: #ffd600;
+            color: #1a237e;
+            display: none;
+        }
+        h1 {
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-bottom: 2px solid #1a237e;
+            background: transparent;
+            color: #1a237e;
+            font-size: 18px;
+        }
+        input::placeholder {
+            color: #1a237e80;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #1a237e;
+            color: #ffd600;
+            border: none;
+            border-radius: 5px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .flight-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .flight-info div {
+            text-align: center;
+        }
+        .code {
+            font-size: 32px;
+            font-weight: bold;
+        }
+        .city {
+            font-size: 16px;
+        }
+        .date, .time {
+            font-size: 14px;
+        }
+        .airplane {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .airplane svg {
+            width: 100px;
+            height: auto;
+        }
+        .passenger-info {
+            margin-top: 20px;
+        }
+        .passenger-info p {
+            margin: 8px 0;
+            display: flex;
+            justify-content: space-between;
+            font-size: 16px;
+        }
+        .barcode {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 24px;
+        }
     </style>
 </head>
 <body>
-    <div id="root"></div>
-    <script type="text/babel">
-        function BoardingPass() {
-            const [name, setName] = React.useState('');
-            const [boardingPass, setBoardingPass] = React.useState(null);
-
-            const generateBoardingPass = () => {
-                setBoardingPass({
-                    name: name,
-                    flight: 'AV001',
-                    destination: 'Avyaan\'s 1st Birthday',
-                    gate: Math.floor(Math.random() * 10) + 1
-                });
-            };
-
-            return (
+    <div class="container">
+        <div class="initial-screen" id="initialScreen">
+            <h1>AVYAAN'S ADVENTURE</h1>
+            <input type="text" id="nameInput" placeholder="Enter Your Name">
+            <button onclick="generateBoardingPass()">EMBARK</button>
+        </div>
+        <div class="boarding-pass" id="boardingPass">
+            <div class="flight-info">
                 <div>
-                    <h1>Avyaan's Travel Adventure</h1>
-                    <input 
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="Enter your name"
-                    />
-                    <button onClick={generateBoardingPass}>
-                        Generate Boarding Pass
-                    </button>
-                    
-                    {boardingPass && (
-                        <div className="boarding-pass">
-                            <h2>Boarding Pass</h2>
-                            <p>Passenger: {boardingPass.name}</p>
-                            <p>Flight: {boardingPass.flight}</p>
-                            <p>Destination: {boardingPass.destination}</p>
-                            <p>Gate: {boardingPass.gate}</p>
-                        </div>
-                    )}
+                    <div class="code">HM</div>
+                    <div class="city">Home</div>
+                    <div class="date">4th Aug, 2024</div>
+                    <div class="time">12:00pm</div>
                 </div>
-            );
-        }
+                <div>
+                    <div class="code">AWL</div>
+                    <div class="city">Avyaan's Wonderland</div>
+                    <div class="date">4th Aug, 2024</div>
+                    <div class="time">04:00pm</div>
+                </div>
+            </div>
+            <div class="airplane">
+                <svg viewBox="0 0 24 24" fill="#1a237e">
+                    <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+                </svg>
+            </div>
+            <div class="passenger-info">
+                <p><span>Passenger:</span> <span id="passengerName"></span></p>
+                <p><span>Flight:</span> <span>AJ307</span></p>
+                <p><span>Terminal:</span> <span>M3M, Golfestate</span></p>
+                <p><span>Gate:</span> <span>First Floor</span></p>
+                <p><span>VIP Club:</span> <span>First Floor</span></p>
+                <p><span>Boarding Time:</span> <span>12:00 PM</span></p>
+            </div>
+            <div class="barcode">
+                ||||| |||| ||||| |||| |||||
+            </div>
+        </div>
+    </div>
 
-        ReactDOM.render(<BoardingPass />, document.getElementById('root'));
+    <script>
+        function generateBoardingPass() {
+            const name = document.getElementById('nameInput').value;
+            if (name) {
+                document.getElementById('passengerName').textContent = name;
+                document.getElementById('initialScreen').style.display = 'none';
+                document.getElementById('boardingPass').style.display = 'flex';
+            }
+        }
     </script>
 </body>
 </html>
