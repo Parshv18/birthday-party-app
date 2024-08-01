@@ -73,6 +73,7 @@
             border-radius: 5px;
             font-size: 20px;
             cursor: pointer;
+            margin-top: 10px;
         }
         .flight-info {
             display: flex;
@@ -90,16 +91,18 @@
         }
         .city {
             font-size: 16px;
+            font-weight: bold;
         }
         .date, .time {
             font-size: 14px;
         }
         .airplane {
             text-align: center;
-            margin: 20px 0;
+            flex: 0 0 auto;
+            margin: 0 10px;
         }
         .airplane svg {
-            width: 100px;
+            width: 60px;
             height: auto;
         }
         .passenger-info {
@@ -110,6 +113,9 @@
             display: flex;
             justify-content: space-between;
             font-size: 16px;
+        }
+        .passenger-info p span:first-child {
+            font-weight: bold;
         }
         .barcode {
             text-align: center;
@@ -143,7 +149,7 @@
         <div class="boarding-pass" id="boardingPass">
             <div class="flight-info">
                 <div>
-                    <div class="code">HM</div>
+                    <div class="code">HMM</div>
                     <div class="city">Home</div>
                     <div class="date">4th Aug, 2024</div>
                     <div class="time">12:00pm</div>
@@ -172,7 +178,7 @@
                 ||||| |||| ||||| |||| |||||
             </div>
             <div class="directions">
-                <a href="https://g.co/kgs/e5oBwti" target="_blank">Get Directions</a>
+                <a href="https://maps.app.goo.gl/e2TM2Nn3EPsovm6Y9" target="_blank">Get Directions</a>
             </div>
             <button onclick="editName()">Edit Name</button>
         </div>
@@ -185,6 +191,7 @@
                 document.getElementById('passengerName').textContent = name;
                 document.getElementById('initialScreen').style.display = 'none';
                 document.getElementById('boardingPass').style.display = 'flex';
+                localStorage.setItem('passengerName', name);
             }
         }
 
@@ -193,6 +200,16 @@
             const newName = prompt("Enter new name:", currentName);
             if (newName) {
                 document.getElementById('passengerName').textContent = newName;
+                localStorage.setItem('passengerName', newName);
+            }
+        }
+
+        window.onload = function() {
+            const savedName = localStorage.getItem('passengerName');
+            if (savedName) {
+                document.getElementById('passengerName').textContent = savedName;
+                document.getElementById('initialScreen').style.display = 'none';
+                document.getElementById('boardingPass').style.display = 'flex';
             }
         }
     </script>
