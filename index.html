@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Avyaan's Adventure Boarding Pass</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body, html {
             height: 100%;
             margin: 0;
             padding: 0;
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Baloo 2', cursive;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -47,9 +47,10 @@
             display: none;
         }
         h1 {
-            font-size: 28px;
+            font-size: 32px;
             text-align: center;
             margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
         input {
             width: 100%;
@@ -60,6 +61,7 @@
             background: transparent;
             color: #1a237e;
             font-size: 18px;
+            font-family: 'Baloo 2', cursive;
         }
         input::placeholder {
             color: #1a237e80;
@@ -74,6 +76,12 @@
             font-size: 20px;
             cursor: pointer;
             margin-top: 10px;
+            font-family: 'Baloo 2', cursive;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         .flight-info {
             display: flex;
@@ -86,11 +94,11 @@
             flex: 1;
         }
         .code {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: bold;
         }
         .city {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
         }
         .date, .time {
@@ -100,6 +108,11 @@
             text-align: center;
             flex: 0 0 auto;
             margin: 0 10px;
+            animation: fly 2s infinite ease-in-out;
+        }
+        @keyframes fly {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
         .airplane svg {
             width: 60px;
@@ -136,6 +149,13 @@
                 height: 100%;
                 border-radius: 0;
             }
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ff69b4;
+            opacity: 0;
         }
     </style>
 </head>
@@ -192,15 +212,30 @@
                 document.getElementById('initialScreen').style.display = 'none';
                 document.getElementById('boardingPass').style.display = 'flex';
                 localStorage.setItem('passengerName', name);
+                createConfetti();
             }
         }
 
         function editName() {
-            const currentName = document.getElementById('passengerName').textContent;
-            const newName = prompt("Enter new name:", currentName);
-            if (newName) {
-                document.getElementById('passengerName').textContent = newName;
-                localStorage.setItem('passengerName', newName);
+            document.getElementById('initialScreen').style.display = 'flex';
+            document.getElementById('boardingPass').style.display = 'none';
+            document.getElementById('nameInput').value = '';
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+                confetti.style.opacity = Math.random();
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                
+                document.body.appendChild(confetti);
+                
+                confetti.addEventListener('animationend', () => {
+                    confetti.remove();
+                });
             }
         }
 
