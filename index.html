@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Avyaan's Adventure Boarding Pass</title>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
     <style>
         body, html {
             height: 100%;
@@ -14,13 +15,21 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #f0f0f0;
+            background-color: #ffffff;
+        }
+        .outer-container {
+            width: 100%;
+            max-width: 400px;
+            height: 90vh;
+            max-height: 800px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff;
         }
         .container {
-            width: 100%;
-            max-width: 350px;
-            height: 100vh;
-            max-height: 700px;
+            width: 90%;
+            height: 90%;
             background-color: #1a237e;
             border-radius: 20px;
             overflow: hidden;
@@ -47,9 +56,9 @@
             display: none;
         }
         h1 {
-            font-size: 32px;
+            font-size: 28px;
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
         input {
@@ -94,11 +103,11 @@
             flex: 1;
         }
         .code {
-            font-size: 36px;
+            font-size: 32px;
             font-weight: bold;
         }
         .city {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
         }
         .date, .time {
@@ -115,7 +124,7 @@
             50% { transform: translateY(-10px); }
         }
         .airplane svg {
-            width: 60px;
+            width: 50px;
             height: auto;
         }
         .passenger-info {
@@ -130,10 +139,13 @@
         .passenger-info p span:first-child {
             font-weight: bold;
         }
-        .barcode {
+        .qr-code {
             text-align: center;
             margin-top: 20px;
-            font-size: 24px;
+        }
+        .qr-code img {
+            width: 100px;
+            height: 100px;
         }
         .directions {
             text-align: center;
@@ -144,63 +156,64 @@
             text-decoration: none;
             font-weight: bold;
         }
-        @media (max-height: 700px) {
-            .container {
-                height: 100%;
-                border-radius: 0;
-            }
+        .travel-icons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
         }
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: #ff69b4;
-            opacity: 0;
+        .travel-icon {
+            font-size: 24px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="initial-screen" id="initialScreen">
-            <h1>AVYAAN'S ADVENTURE</h1>
-            <input type="text" id="nameInput" placeholder="Enter Your Name">
-            <button onclick="generateBoardingPass()">EMBARK</button>
-        </div>
-        <div class="boarding-pass" id="boardingPass">
-            <div class="flight-info">
-                <div>
-                    <div class="code">HMM</div>
-                    <div class="city">Home</div>
-                    <div class="date">4th Aug, 2024</div>
-                    <div class="time">12:00pm</div>
-                </div>
-                <div class="airplane">
-                    <svg viewBox="0 0 24 24" fill="#1a237e">
-                        <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
-                    </svg>
-                </div>
-                <div>
-                    <div class="code">AWL</div>
-                    <div class="city">Avyaan's Wonderland</div>
-                    <div class="date">4th Aug, 2024</div>
-                    <div class="time">04:00pm</div>
+    <div class="outer-container">
+        <div class="container">
+            <div class="initial-screen" id="initialScreen">
+                <h1>AVYAAN'S ADVENTURE</h1>
+                <input type="text" id="nameInput" placeholder="Enter Your Name">
+                <button onclick="generateBoardingPass()">EMBARK</button>
+                <div class="travel-icons">
+                    <span class="travel-icon">✈️</span>
+                    <span class="travel-icon">🚂</span>
+                    <span class="travel-icon">🚢</span>
+                    <span class="travel-icon">🚗</span>
                 </div>
             </div>
-            <div class="passenger-info">
-                <p><span>Passenger:</span> <span id="passengerName"></span></p>
-                <p><span>Flight:</span> <span>AJ307</span></p>
-                <p><span>Terminal:</span> <span>M3M, Golfestate</span></p>
-                <p><span>Gate:</span> <span>First Floor, VIP Club</span></p>
-                <p><span>Take off:</span> <span>12:00 PM</span></p>
-                <p><span>Landing:</span> <span>4:00 PM</span></p>
+            <div class="boarding-pass" id="boardingPass">
+                <div class="flight-info">
+                    <div>
+                        <div class="code">HMM</div>
+                        <div class="city">Home</div>
+                        <div class="date">4th Aug, 2024</div>
+                        <div class="time">12:00pm</div>
+                    </div>
+                    <div class="airplane">
+                        <svg viewBox="0 0 24 24" fill="#1a237e">
+                            <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="code">AWL</div>
+                        <div class="city">Avyaan's Wonderland</div>
+                        <div class="date">4th Aug, 2024</div>
+                        <div class="time">04:00pm</div>
+                    </div>
+                </div>
+                <div class="passenger-info">
+                    <p><span>Passenger:</span> <span id="passengerName"></span></p>
+                    <p><span>Flight:</span> <span>AJ307</span></p>
+                    <p><span>Terminal:</span> <span>M3M, Golfestate</span></p>
+                    <p><span>Gate:</span> <span>First Floor, VIP Club</span></p>
+                    <p><span>Take off:</span> <span>12:00 PM</span></p>
+                    <p><span>Landing:</span> <span>4:00 PM</span></p>
+                </div>
+                <div class="qr-code" id="qrCode"></div>
+                <div class="directions">
+                    <a href="https://maps.app.goo.gl/e2TM2Nn3EPsovm6Y9" target="_blank">Get Directions</a>
+                </div>
+                <button onclick="editName()">Edit Name</button>
             </div>
-            <div class="barcode">
-                ||||| |||| ||||| |||| |||||
-            </div>
-            <div class="directions">
-                <a href="https://maps.app.goo.gl/e2TM2Nn3EPsovm6Y9" target="_blank">Get Directions</a>
-            </div>
-            <button onclick="editName()">Edit Name</button>
         </div>
     </div>
 
@@ -212,7 +225,7 @@
                 document.getElementById('initialScreen').style.display = 'none';
                 document.getElementById('boardingPass').style.display = 'flex';
                 localStorage.setItem('passengerName', name);
-                createConfetti();
+                generateQRCode();
             }
         }
 
@@ -222,21 +235,11 @@
             document.getElementById('nameInput').value = '';
         }
 
-        function createConfetti() {
-            for (let i = 0; i < 50; i++) {
-                const confetti = document.createElement('div');
-                confetti.classList.add('confetti');
-                confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
-                confetti.style.opacity = Math.random();
-                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-                
-                document.body.appendChild(confetti);
-                
-                confetti.addEventListener('animationend', () => {
-                    confetti.remove();
-                });
-            }
+        function generateQRCode() {
+            var qr = qrcode(0, 'M');
+            qr.addData('https://maps.app.goo.gl/e2TM2Nn3EPsovm6Y9');
+            qr.make();
+            document.getElementById('qrCode').innerHTML = qr.createImgTag(5);
         }
 
         window.onload = function() {
@@ -245,6 +248,7 @@
                 document.getElementById('passengerName').textContent = savedName;
                 document.getElementById('initialScreen').style.display = 'none';
                 document.getElementById('boardingPass').style.display = 'flex';
+                generateQRCode();
             }
         }
     </script>
