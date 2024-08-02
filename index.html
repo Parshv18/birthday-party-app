@@ -1,11 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- [Previous head content remains the same] -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Avyaan's Adventure Boarding Pass</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
     <style>
-        /* [Previous styles remain the same] */
-
-        #adminButton, #backButton {
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Baloo 2', cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff;
+        }
+        .container {
+            width: 90%;
+            max-width: 350px;
+            height: 90vh;
+            max-height: 700px;
+            background-color: #1a237e;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        .initial-screen, .boarding-pass {
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-y: auto;
+        }
+        .initial-screen {
+            background-color: #ffd600;
+            color: #1a237e;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='%231a237e' fill-opacity='0.1'%3E%3Cpath d='M15 5h2v5h-2zM30 5h2v5h-2zM45 5h2v5h-2zM5 15h5v2H5zM5 30h5v2H5zM5 45h5v2H5zM50 15h5v2h-5zM50 30h5v2h-5zM50 45h5v2h-5zM26 24l4-8 4 8z'/%3E%3Cpath d='M12 29a3 3 0 100-6 3 3 0 000 6zM48 29a3 3 0 100-6 3 3 0 000 6zM30 47a3 3 0 100-6 3 3 0 000 6z'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 60px 60px;
+        }
+        .boarding-pass {
+            background-color: #ffd600;
+            color: #1a237e;
+            display: none;
+        }
+        h1 {
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(26, 35, 126, 0.3);
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-bottom: 2px solid #1a237e;
+            background: transparent;
+            color: #1a237e;
+            font-size: 18px;
+            font-family: 'Baloo 2', cursive;
+            box-sizing: border-box;
+        }
+        input::placeholder {
+            color: #1a237e80;
+        }
+        button {
             width: 100%;
             padding: 15px;
             background-color: #1a237e;
@@ -18,51 +84,116 @@
             font-family: 'Baloo 2', cursive;
             transition: transform 0.3s, box-shadow 0.3s;
         }
-
-        #adminView {
-            display: none;
-            background-color: #ffd600;
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .flight-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .flight-info div {
+            text-align: center;
+            flex: 1;
+        }
+        .code {
+            font-size: 36px;
+            font-weight: bold;
+        }
+        .city {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .date, .time {
+            font-size: 14px;
+        }
+        .airplane {
+            text-align: center;
+            flex: 0 0 auto;
+            margin: 0 10px;
+            animation: fly 2s infinite ease-in-out;
+        }
+        @keyframes fly {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .airplane svg {
+            width: 60px;
+            height: auto;
+        }
+        .passenger-info {
+            margin-top: 20px;
+        }
+        .passenger-info p {
+            margin: 8px 0;
+            display: flex;
+            justify-content: space-between;
+            font-size: 16px;
+        }
+        .passenger-info p span:first-child {
+            font-weight: bold;
+        }
+        #qrcode {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .directions {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .directions a {
             color: #1a237e;
-            width: 100%;
-            height: 100%;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
-        }
-
-        #passengerList {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        #passengerList li {
-            background-color: #ffffff;
-            margin-bottom: 10px;
-            padding: 10px;
-            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="initial-screen" id="initialScreen">
-            <!-- [Initial screen content remains the same] -->
+            <h1>AVYAAN'S ADVENTURE</h1>
+            <input type="text" id="nameInput" placeholder="Enter Your Name">
+            <button onclick="generateBoardingPass()">EMBARK</button>
         </div>
         <div class="boarding-pass" id="boardingPass">
-            <!-- [Boarding pass content remains the same] -->
-            <button id="adminButton" onclick="showAdminView()" style="display: none;">View Passengers</button>
+            <div class="flight-info">
+                <div>
+                    <div class="code">HMM</div>
+                    <div class="city">Home</div>
+                    <div class="date">4th Aug, 2024</div>
+                    <div class="time">12:00pm</div>
+                </div>
+                <div class="airplane">
+                    <svg viewBox="0 0 24 24" fill="#1a237e">
+                        <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="code">AWL</div>
+                    <div class="city">Avyaan's Wonderland</div>
+                    <div class="date">4th Aug, 2024</div>
+                    <div class="time">04:00pm</div>
+                </div>
+            </div>
+            <div class="passenger-info">
+                <p><span>Passenger:</span> <span id="passengerName"></span></p>
+                <p><span>Flight:</span> <span>AJ307</span></p>
+                <p><span>Terminal:</span> <span>M3M, Golfestate</span></p>
+                <p><span>Gate:</span> <span>First Floor, VIP Club</span></p>
+                <p><span>Take off:</span> <span>12:00 PM</span></p>
+                <p><span>Landing:</span> <span>4:00 PM</span></p>
+            </div>
+            <div id="qrcode"></div>
+            <div class="directions">
+                <a href="https://maps.app.goo.gl/e2TM2Nn3EPsovm6Y9" target="_blank">Get Directions</a>
+            </div>
             <button onclick="editName()">Edit Name</button>
-        </div>
-        <div id="adminView">
-            <h2>Checked-in Passengers</h2>
-            <ul id="passengerList"></ul>
-            <button id="backButton" onclick="hideAdminView()">Back to Boarding Pass</button>
         </div>
     </div>
 
     <script>
-        let passengers = [];
-
         function generateBoardingPass() {
             const name = document.getElementById('nameInput').value;
             if (name) {
@@ -71,50 +202,26 @@
                 document.getElementById('boardingPass').style.display = 'flex';
                 localStorage.setItem('passengerName', name);
                 generateQRCode();
-
-                if (name.toLowerCase() === 'parshv') {
-                    document.getElementById('adminButton').style.display = 'block';
-                } else {
-                    addPassenger(name);
-                }
             }
         }
 
         function editName() {
             document.getElementById('initialScreen').style.display = 'flex';
             document.getElementById('boardingPass').style.display = 'none';
-            document.getElementById('adminView').style.display = 'none';
             document.getElementById('nameInput').value = '';
-            document.getElementById('adminButton').style.display = 'none';
         }
 
-        function showAdminView() {
-            document.getElementById('boardingPass').style.display = 'none';
-            document.getElementById('adminView').style.display = 'block';
-            updatePassengerList();
-        }
-
-        function hideAdminView() {
-            document.getElementById('adminView').style.display = 'none';
-            document.getElementById('boardingPass').style.display = 'flex';
-        }
-
-        function addPassenger(name) {
-            passengers.push(name);
-            localStorage.setItem('passengers', JSON.stringify(passengers));
-        }
-
-        function updatePassengerList() {
-            const list = document.getElementById('passengerList');
-            list.innerHTML = '';
-            passengers.forEach(passenger => {
-                const li = document.createElement('li');
-                li.textContent = passenger;
-                list.appendChild(li);
+        function generateQRCode() {
+            document.getElementById('qrcode').innerHTML = '';
+            new QRCode(document.getElementById("qrcode"), {
+                text: "https://maps.app.goo.gl/e2TM2Nn3EPsovm6Y9",
+                width: 128,
+                height: 128,
+                colorDark : "#1a237e",
+                colorLight : "#ffd600",
+                correctLevel : QRCode.CorrectLevel.H
             });
         }
-
-        // [The rest of the JavaScript functions remain the same]
 
         window.onload = function() {
             const savedName = localStorage.getItem('passengerName');
@@ -123,15 +230,6 @@
                 document.getElementById('initialScreen').style.display = 'none';
                 document.getElementById('boardingPass').style.display = 'flex';
                 generateQRCode();
-
-                if (savedName.toLowerCase() === 'parshv') {
-                    document.getElementById('adminButton').style.display = 'block';
-                }
-            }
-
-            const savedPassengers = localStorage.getItem('passengers');
-            if (savedPassengers) {
-                passengers = JSON.parse(savedPassengers);
             }
         }
     </script>
