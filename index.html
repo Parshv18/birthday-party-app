@@ -207,8 +207,9 @@
                 document.getElementById('passengerName').textContent = name;
                 document.getElementById('initialScreen').style.display = 'none';
                 document.getElementById('boardingPass').style.display = 'flex';
-                localStorage.setItem('passengerName', name);
                 generateQRCode();
+                // Update URL with name parameter
+                window.history.replaceState({}, '', `?name=${encodeURIComponent(name)}`);
             }
         }
 
@@ -216,6 +217,8 @@
             document.getElementById('initialScreen').style.display = 'flex';
             document.getElementById('boardingPass').style.display = 'none';
             document.getElementById('nameInput').value = '';
+            // Remove name parameter from URL
+            window.history.replaceState({}, '', window.location.pathname);
         }
 
         function generateQRCode() {
@@ -231,7 +234,8 @@
         }
 
         window.onload = function() {
-            const savedName = localStorage.getItem('passengerName');
+            const urlParams = new URLSearchParams(window.location.search);
+            const savedName = urlParams.get('name');
             if (savedName) {
                 document.getElementById('passengerName').textContent = savedName;
                 document.getElementById('initialScreen').style.display = 'none';
