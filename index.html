@@ -92,61 +92,37 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px; /* Space between flight-info and date-time */
-            text-align: center; /* Center text within location sections */
+            margin-bottom: 20px;
         }
-        
-        .flight-info .location {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .flight-info div {
             text-align: center;
+            flex: 1;
         }
-        
         .code {
             font-size: 36px;
             font-weight: bold;
-            margin-bottom: 5px; /* Margin to keep space between code and city */
         }
-        
         .city {
             font-size: 18px;
             font-weight: bold;
-            margin-bottom: 5px; /* Margin to keep space between city and airplane */
         }
-        
+        .date, .time {
+            font-size: 14px;
+        }
         .airplane {
             text-align: center;
             flex: 0 0 auto;
             margin: 0 10px;
             animation: fly 2s infinite ease-in-out;
         }
-        
         @keyframes fly {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
-        
         .airplane svg {
             width: 60px;
             height: auto;
         }
-        
-        .date-time {
-            text-align: center;
-            margin: 10px 0;
-            font-size: 16px;
-            font-weight: bold;
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Center-align the text */
-        }
-        
-        .date {
-            margin-bottom: 0; /* Remove extra space */
-        }
-        
         .passenger-info {
             margin-top: 20px;
         }
@@ -190,28 +166,31 @@
         </div>
         <div class="boarding-pass" id="boardingPass">
             <div class="flight-info">
-                <div class="location">
+                <div>
                     <div class="code">HMM</div>
                     <div class="city">Home</div>
+                    <div class="date">4th Aug, 2024</div>
+                    <div class="time">12:00pm</div>
                 </div>
                 <div class="airplane">
                     <svg viewBox="0 0 24 24" fill="#1a237e">
                         <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
                     </svg>
                 </div>
-                <div class="location">
+                <div>
                     <div class="code">AOL</div>
                     <div class="city">Avyaan's Onederland</div>
+                    <div class="date">4th Aug, 2024</div>
+                    <div class="time">04:00pm</div>
                 </div>
-            </div>
-            <div class="date-time">
-                <div class="date">4th Aug, 2024</div>
             </div>
             <div class="passenger-info">
                 <p><span>Passenger:</span> <span id="passengerName"></span></p>
                 <p><span>Flight:</span> <span>AJ307</span></p>
                 <p><span>Terminal:</span> <span>M3M, Golfestate</span></p>
                 <p><span>Gate:</span> <span>First Floor, VIP Club</span></p>
+                <p><span>Take off:</span> <span>12:00 PM</span></p>
+                <p><span>Landing:</span> <span>4:00 PM</span></p>
             </div>
             <div id="qrcode"></div>
             <div class="directions">
@@ -263,4 +242,3 @@
     </script>
 </body>
 </html>
-
