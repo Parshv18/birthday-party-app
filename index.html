@@ -214,3 +214,53 @@
                 <p><span>Gate:</span> <span>First Floor, VIP Club</span></p>
             </div>
             <div id="qrcode"></div>
+            <div class="directions">
+                <a href="https://maps.app.goo.gl/e2TM2Nn3EPsovm6Y9" target="_blank">Get Directions</a>
+            </div>
+            <button onclick="editName()">Edit Name</button>
+        </div>
+    </div>
+
+    <script>
+        function generateBoardingPass() {
+            const name = document.getElementById('nameInput').value;
+            if (name) {
+                document.getElementById('passengerName').textContent = name;
+                document.getElementById('initialScreen').style.display = 'none';
+                document.getElementById('boardingPass').style.display = 'flex';
+                localStorage.setItem('passengerName', name);
+                generateQRCode();
+            }
+        }
+
+        function editName() {
+            document.getElementById('initialScreen').style.display = 'flex';
+            document.getElementById('boardingPass').style.display = 'none';
+            document.getElementById('nameInput').value = '';
+        }
+
+        function generateQRCode() {
+            document.getElementById('qrcode').innerHTML = '';
+            new QRCode(document.getElementById("qrcode"), {
+                text: "https://maps.app.goo.gl/e2TM2Nn3EPsovm6Y9",
+                width: 128,
+                height: 128,
+                colorDark : "#1a237e",
+                colorLight : "#ffd600",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        }
+
+        window.onload = function() {
+            const savedName = localStorage.getItem('passengerName');
+            if (savedName) {
+                document.getElementById('passengerName').textContent = savedName;
+                document.getElementById('initialScreen').style.display = 'none';
+                document.getElementById('boardingPass').style.display = 'flex';
+                generateQRCode();
+            }
+        }
+    </script>
+</body>
+</html>
+
