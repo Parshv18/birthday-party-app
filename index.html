@@ -91,20 +91,24 @@
         .flight-info {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             margin-bottom: 20px;
         }
         .flight-info div {
             text-align: center;
             flex: 1;
+            display: flex;
+            flex-direction: column;
         }
         .code {
             font-size: 36px;
             font-weight: bold;
+            line-height: 1;
         }
         .city {
             font-size: 18px;
             font-weight: bold;
+            line-height: 1.2;
         }
         .date, .time {
             font-size: 14px;
@@ -135,16 +139,26 @@
         .passenger-info p span:first-child {
             font-weight: bold;
         }
-       #qrcode {
-        text-align: center;
-        margin: 20px auto;
-        width: 128px;
-        height: 128px;
+        .valet-info {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 14px;
         }
-
+        .event-date {
+            text-align: center;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        #qrcode {
+            text-align: center;
+            margin: 10px auto;
+            width: 128px;
+            height: 128px;
+        }
         #qrcode img {
-        display: block;
-        margin: 0 auto;
+            display: block;
+            margin: 0 auto;
         }
         .directions {
             text-align: center;
@@ -169,8 +183,6 @@
                 <div>
                     <div class="code">HMM</div>
                     <div class="city">Home</div>
-                    <div class="date">4th Aug, 2024</div>
-                    <div class="time">12:00pm</div>
                 </div>
                 <div class="airplane">
                     <svg viewBox="0 0 24 24" fill="#1a237e">
@@ -180,10 +192,9 @@
                 <div>
                     <div class="code">AOL</div>
                     <div class="city">Avyaan's Onederland</div>
-                    <div class="date">4th Aug, 2024</div>
-                    <div class="time">4:00pm</div>
                 </div>
             </div>
+            <div class="event-date">4th Aug, 2024</div>
             <div class="passenger-info">
                 <p><span>Passenger:</span> <span id="passengerName"></span></p>
                 <p><span>Flight:</span> <span>AJ307</span></p>
@@ -192,6 +203,7 @@
                 <p><span>Take off:</span> <span>12:00 PM</span></p>
                 <p><span>Landing:</span> <span>4:00 PM</span></p>
             </div>
+            <div class="valet-info">*Valet parking available at the venue</div>
             <div id="qrcode"></div>
             <div class="directions">
                 <a href="https://maps.app.goo.gl/e2TM2Nn3EPsovm6Y9" target="_blank">Get Directions</a>
