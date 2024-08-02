@@ -89,18 +89,19 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         .flight-info {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin-bottom: 10px;
-        }
+    display: flex;
+    justify-content: space-between; /* Ensure items are spread evenly */
+    align-items: center;
+    margin-bottom: 10px; /* Space between flight-info and date-time */
+    text-align: center; /* Center text within location sections */
+}
         .flight-info .location {
-        text-align: center;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        }
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
         .flight-info div {
             text-align: center;
             flex: 1;
@@ -109,38 +110,37 @@
             justify-content: center;
         }
         .code {
-            font-size: 36px;
+    font-size: 36px;
     font-weight: bold;
-    margin-bottom: 5px;
-        }
+    margin-bottom: 5px; /* Margin to keep space between code and city */
+}
         .city {
-            font-size: 18px;
+    font-size: 18px;
     font-weight: bold;
-    margin-bottom: 5px;
-        }
+    margin-bottom: 5px; /* Margin to keep space between city and airplane */
+}
+
         .date {
-        font-size: 16px;
-        font-weight: bold;
-        margin-bottom: 5px;
-        }
-        .date, .time {
-            text-align: center;
+    margin-bottom: 0; /* Remove extra space */
+}
+        .date-time {
+    text-align: center;
     margin: 10px 0;
     font-size: 16px;
     font-weight: bold;
     display: flex;
     flex-direction: column;
-    align-items: center;
-        }
+    align-items: center; /* Center-align the text */
+}
         .time {
         margin: 0;
         }
-        .airplane {
-            text-align: center;
-            flex: 0 0 auto;
-            margin: 0 10px;
-            animation: fly 2s infinite ease-in-out;
-        }
+       .airplane {
+    text-align: center;
+    flex: 0 0 auto;
+    margin: 0 10px;
+    animation: fly 2s infinite ease-in-out;
+}
         @keyframes fly {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
@@ -208,7 +208,6 @@
 </div>
 <div class="date-time">
     <div class="date">4th Aug, 2024</div>
-    <div class="time">12:00 PM to 04:00 PM</div>
 </div>
             <div class="passenger-info">
                 <p><span>Passenger:</span> <span id="passengerName"></span></p>
